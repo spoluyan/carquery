@@ -75,9 +75,9 @@ public class CarQueryServiceTest {
         details.setWidthMm(1950);
         details.setHeightMm(1220);
         details.setWheelBaseMm(2520);
-        details.setLitersPer100kmHighway(11);
-        details.setLitersPer100kmMixed(21);
-        details.setLitersPer100kmCity(18);
+        details.setLitersPer100kmHighway(10.7f);
+        details.setLitersPer100kmMixed(21.2f);
+        details.setLitersPer100kmCity(18.1f);
         details.setFuelCapasityLiters(70);
         details.setSolidInUS(true);
         details.setEngineVolumeLiters(8.3f);
@@ -93,7 +93,7 @@ public class CarQueryServiceTest {
         details.setWidthIn(76.8f);
         details.setHeightIn(48.0f);
         details.setWheelBaseIn(99.2f);
-        details.setMilesPerGallonHighway(21);
+        details.setMilesPerGallonHighway(22);
         details.setMilesPerGallonCity(13);
         details.setMilesPerGallonMixed(11);
         details.setFuelCapasityGallons(18.5f);
@@ -213,7 +213,7 @@ public class CarQueryServiceTest {
 
         ModelDetails details = carQueryService.getModelDetails(TEST_MODEL_ID);
         Assert.assertNotNull(details);
-        Assert.assertTrue(TEST_MODEL_DETAILS.equals(details));
+        Assert.assertEquals(TEST_MODEL_DETAILS, details);
     }
 
     @Test

@@ -173,24 +173,24 @@ public class ModelDetails implements Serializable {
     private Float wheelBaseIn;
 
     @JsonProperty("model_lkm_hwy")
-    @JsonDeserialize(using = StringToIntegerDeserializer.class)
-    private Integer litersPer100kmHighway;
+    @JsonDeserialize(using = StringToFloatDeserializer.class)
+    private Float litersPer100kmHighway;
 
     @JsonProperty("model_mpg_hwy")
     @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer milesPerGallonHighway;
 
     @JsonProperty("model_lkm_mixed")
-    @JsonDeserialize(using = StringToIntegerDeserializer.class)
-    private Integer litersPer100kmMixed;
+    @JsonDeserialize(using = StringToFloatDeserializer.class)
+    private Float litersPer100kmMixed;
 
     @JsonProperty("model_mpg_mixed")
     @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer milesPerGallonMixed;
 
     @JsonProperty("model_lkm_city")
-    @JsonDeserialize(using = StringToIntegerDeserializer.class)
-    private Integer litersPer100kmCity;
+    @JsonDeserialize(using = StringToFloatDeserializer.class)
+    private Float litersPer100kmCity;
 
     @JsonProperty("model_mpg_city")
     @JsonDeserialize(using = StringToIntegerDeserializer.class)
@@ -556,11 +556,11 @@ public class ModelDetails implements Serializable {
         this.wheelBaseIn = wheelBaseIn;
     }
 
-    public Integer getLitersPer100kmHighway() {
+    public Float getLitersPer100kmHighway() {
         return litersPer100kmHighway;
     }
 
-    public void setLitersPer100kmHighway(Integer litersPer100kmHighway) {
+    public void setLitersPer100kmHighway(Float litersPer100kmHighway) {
         this.litersPer100kmHighway = litersPer100kmHighway;
     }
 
@@ -572,11 +572,11 @@ public class ModelDetails implements Serializable {
         this.milesPerGallonHighway = milesPerGallonHighway;
     }
 
-    public Integer getLitersPer100kmMixed() {
+    public Float getLitersPer100kmMixed() {
         return litersPer100kmMixed;
     }
 
-    public void setLitersPer100kmMixed(Integer litersPer100kmMixed) {
+    public void setLitersPer100kmMixed(Float litersPer100kmMixed) {
         this.litersPer100kmMixed = litersPer100kmMixed;
     }
 
@@ -588,11 +588,11 @@ public class ModelDetails implements Serializable {
         this.milesPerGallonMixed = milesPerGallonMixed;
     }
 
-    public Integer getLitersPer100kmCity() {
+    public Float getLitersPer100kmCity() {
         return litersPer100kmCity;
     }
 
-    public void setLitersPer100kmCity(Integer litersPer100kmCity) {
+    public void setLitersPer100kmCity(Float litersPer100kmCity) {
         this.litersPer100kmCity = litersPer100kmCity;
     }
 
