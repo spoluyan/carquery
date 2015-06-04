@@ -38,6 +38,9 @@ public class CarQueryServiceImpl implements CarQueryService {
     private static final String JSON_MIN_YEAR = "min_year";
     private static final String JSON_MAX_YEAR = "max_year";
 
+    private static final String PARAM_YEAR = "&year=";
+    private static final String PARAM_SOLID_IN_US = "&sold_in_us=1";
+
     @Override
     public List<Integer> getYears() {
         JsonNode json = makeRequest(API_URL + COMMAND_GET_YEARS);
@@ -56,10 +59,10 @@ public class CarQueryServiceImpl implements CarQueryService {
     public List<Make> getMakes(GetMakesRequest request) {
         StringBuilder url = new StringBuilder(API_URL).append(COMMAND_GET_MAKES);
         if (request.getYear() != null) {
-            url.append("&year=").append(request.getYear());
+            url.append(PARAM_YEAR).append(request.getYear());
         }
         if (request.isSolidInUS()) {
-            url.append("&sold_in_us=1");
+            url.append(PARAM_SOLID_IN_US);
         }
         JsonNode json = makeRequest(url.toString());
 
