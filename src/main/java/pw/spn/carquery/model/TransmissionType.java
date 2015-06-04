@@ -1,8 +1,8 @@
 package pw.spn.carquery.model;
 
 public enum TransmissionType {
-    // TODO add more
-    UNKNOWN("Unknown"), MANUAL("Manual");
+    AUTOMATED_MANUAL("Automated Manual"), AUTOMATIC("Automatic"), DIRECT_DRIVE("Direct Drive"), MANUAL("Manual"), NOT_AVAILABLE(
+            "Not Available");
 
     private String value;
 
@@ -20,6 +20,6 @@ public enum TransmissionType {
                 return type;
             }
         }
-        return UNKNOWN;
+        return NOT_AVAILABLE;
     }
 }
