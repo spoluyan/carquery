@@ -42,11 +42,13 @@ public class CarQueryServiceImpl implements CarQueryService {
 
     private static final String JSON_MIN_YEAR = "min_year";
     private static final String JSON_MAX_YEAR = "max_year";
+    private static final String JSON_ERROR = "\"error\"";
 
     private static final String PARAM_YEAR = "&year=";
     private static final String PARAM_SOLID_IN_US = "&sold_in_us=1";
     private static final String PARAM_MAKE = "&make=";
     private static final String PARAM_BODY = "&body=";
+    private static final String PARAM_MODEL = "&model=";
 
     @Override
     public List<Integer> getYears() {
@@ -111,8 +113,19 @@ public class CarQueryServiceImpl implements CarQueryService {
 
     @Override
     public ModelDetails getModelDetails(String modelId) {
-        // TODO Auto-generated method stub
-        return null;
+        if (modelId == null) {
+            return null;
+        }
+        String url = new StringBuilder(API_URL).append(COMMAND_GET_MODEL_DETAILS).append(PARAM_MODEL).append(modelId)
+                .toString();
+        JsonNode json = makeRequest(url);
+
+        if (json == null) {
+            return null;
+        }
+
+        return parseJSON(json, new TypeReference<ModelDetails>() {
+        });
     }
 
     @Override
@@ -171,11 +184,19 @@ public class CarQueryServiceImpl implements CarQueryService {
             return null;
         }
 
+        if (json.contains(JSON_ERROR)) {
+            LOG.error(json);
+            return null;
+        }
+
         ObjectMapper mapper = new ObjectMapper();
         JsonParser parser = null;
         try {
             parser = mapper.getJsonFactory().createJsonParser(json);
             JsonNode object = mapper.readTree(parser);
+            if (object.isArray()) {
+                return object.get(0);
+            }
             JsonNode result = object.get(object.getFieldNames().next());
             return result;
         } catch (IOException e) {

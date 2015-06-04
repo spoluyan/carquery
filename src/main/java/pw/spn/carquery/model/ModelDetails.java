@@ -3,63 +3,245 @@ package pw.spn.carquery.model;
 import java.io.Serializable;
 import java.util.Arrays;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+
+import pw.spn.carquery.json.StringToBodyTypeDeserializer;
+import pw.spn.carquery.json.StringToBooleanDeserializer;
+import pw.spn.carquery.json.StringToDriveTypeDeserializer;
+import pw.spn.carquery.json.StringToEnginePositionDeserializer;
+import pw.spn.carquery.json.StringToEngineTypeDeserializer;
+import pw.spn.carquery.json.StringToFloatDeserializer;
+import pw.spn.carquery.json.StringToFuelTypeDeserializer;
+import pw.spn.carquery.json.StringToIntegerDeserializer;
+import pw.spn.carquery.json.StringToTransmissionTypeDeserializer;
+
+@JsonIgnoreProperties({ "model_co2", "model_make_display" })
 public class ModelDetails implements Serializable {
     private static final long serialVersionUID = 6523783339042442362L;
 
+    @JsonProperty("model_id")
     private String modelID;
+
+    @JsonProperty("model_make_id")
     private String makeID;
+
+    @JsonProperty("model_name")
     private String name;
+
+    @JsonProperty("model_trim")
+    private String modelTrim;
+
+    @JsonProperty("model_year")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer year;
+
+    @JsonProperty("model_body")
+    @JsonDeserialize(using = StringToBodyTypeDeserializer.class)
     private BodyType bodyType;
+
+    @JsonProperty("model_engine_position")
+    @JsonDeserialize(using = StringToEnginePositionDeserializer.class)
     private EnginePosition enginePosition;
+
+    @JsonProperty("model_engine_cc")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer engineCubicCentimetres;
+
+    @JsonProperty("model_engine_ci")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer engineCubicInches;
+
+    @JsonProperty("model_engine_cyl")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer cylinders;
+
+    @JsonProperty("model_engine_type")
+    @JsonDeserialize(using = StringToEngineTypeDeserializer.class)
     private EngineType engineType;
+
+    @JsonProperty("model_engine_valves_per_cyl")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer valvesPerCylinder;
+
+    @JsonProperty("model_engine_power_ps")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer powerPS;
+
+    @JsonProperty("model_engine_power_rpm")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer powerRPM;
+
+    @JsonProperty("model_engine_torque_nm")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer torqueNm;
+
+    @JsonProperty("model_engine_torque_rpm")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer torqueRPM;
+
+    @JsonProperty("model_engine_bore_mm")
+    @JsonDeserialize(using = StringToFloatDeserializer.class)
     private Float engineBoreMm;
+
+    @JsonProperty("model_engine_bore_in")
+    @JsonDeserialize(using = StringToFloatDeserializer.class)
+    private Float engineBoreIn;
+
+    @JsonProperty("model_engine_stroke_mm")
+    @JsonDeserialize(using = StringToFloatDeserializer.class)
     private Float engineStrokeMm;
+
+    @JsonProperty("model_engine_stroke_in")
+    @JsonDeserialize(using = StringToFloatDeserializer.class)
+    private Float engineStrokeIn;
+
+    @JsonProperty("model_engine_compression")
     private String engineCompression;
+
+    @JsonProperty("model_engine_fuel")
+    @JsonDeserialize(using = StringToFuelTypeDeserializer.class)
     private FuelType fuleType;
+
+    @JsonProperty("model_top_speed_kph")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer topSpeedKmPH;
+
+    @JsonProperty("model_top_speed_mph")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer topSpeedMPH;
+
+    @JsonProperty("model_0_to_100_kph")
+    @JsonDeserialize(using = StringToFloatDeserializer.class)
     private Float zeroTo100InSeconds;
+
+    @JsonProperty("model_drive")
+    @JsonDeserialize(using = StringToDriveTypeDeserializer.class)
     private DriveType driveType;
+
+    @JsonProperty("model_transmission_type")
+    @JsonDeserialize(using = StringToTransmissionTypeDeserializer.class)
     private TransmissionType transmissionType;
+
+    @JsonProperty("model_seats")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer seats;
+
+    @JsonProperty("model_doors")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer doors;
+
+    @JsonProperty("model_weight_kg")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer weightKg;
+
+    @JsonProperty("model_weight_lbs")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer weightLbs;
+
+    @JsonProperty("model_length_mm")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer lengthMm;
+
+    @JsonProperty("model_length_in")
+    @JsonDeserialize(using = StringToFloatDeserializer.class)
     private Float lengthIn;
+
+    @JsonProperty("model_width_mm")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer widthMm;
+
+    @JsonProperty("model_width_in")
+    @JsonDeserialize(using = StringToFloatDeserializer.class)
     private Float widthIn;
+
+    @JsonProperty("model_height_mm")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer heightMm;
+
+    @JsonProperty("model_height_in")
+    @JsonDeserialize(using = StringToFloatDeserializer.class)
     private Float heightIn;
+
+    @JsonProperty("model_wheelbase_mm")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer wheelBaseMm;
-    private Integer wheelBaseIn;
+
+    @JsonProperty("model_wheelbase_in")
+    @JsonDeserialize(using = StringToFloatDeserializer.class)
+    private Float wheelBaseIn;
+
+    @JsonProperty("model_lkm_hwy")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer litersPer100kmHighway;
+
+    @JsonProperty("model_mpg_hwy")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer milesPerGallonHighway;
+
+    @JsonProperty("model_lkm_mixed")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer litersPer100kmMixed;
+
+    @JsonProperty("model_mpg_mixed")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer milesPerGallonMixed;
+
+    @JsonProperty("model_lkm_city")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer litersPer100kmCity;
+
+    @JsonProperty("model_mpg_city")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer milesPerGallonCity;
+
+    @JsonProperty("model_fuel_cap_l")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer fuelCapasityLiters;
+
+    @JsonProperty("model_fuel_cap_g")
+    @JsonDeserialize(using = StringToFloatDeserializer.class)
     private Float fuelCapasityGallons;
+
+    @JsonProperty("model_sold_in_us")
+    @JsonDeserialize(using = StringToBooleanDeserializer.class)
     private boolean solidInUS;
+
+    @JsonProperty("model_engine_l")
+    @JsonDeserialize(using = StringToFloatDeserializer.class)
     private Float engineVolumeLiters;
+
+    @JsonProperty("model_engine_valves")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer engineValves;
+
+    @JsonProperty("model_engine_power_hp")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer powerHP;
+
+    @JsonProperty("model_engine_power_kw")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer powerKW;
+
+    @JsonProperty("model_engine_torque_lbft")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer torqueLbFeet;
+
+    @JsonProperty("model_engine_torque_kgm")
+    @JsonDeserialize(using = StringToIntegerDeserializer.class)
     private Integer torqueKgM;
+
+    @JsonProperty("make_display")
     private String makeName;
+
+    @JsonProperty("make_country")
     private String makeCountry;
+
+    @JsonProperty("ExtColors")
     private String[] exterierColors;
+
+    @JsonProperty("IntColors")
     private String[] interierColors;
 
     public String getModelID() {
@@ -84,6 +266,14 @@ public class ModelDetails implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getModelTrim() {
+        return modelTrim;
+    }
+
+    public void setModelTrim(String modelTrim) {
+        this.modelTrim = modelTrim;
     }
 
     public Integer getYear() {
@@ -190,12 +380,28 @@ public class ModelDetails implements Serializable {
         this.engineBoreMm = engineBoreMm;
     }
 
+    public Float getEngineBoreIn() {
+        return engineBoreIn;
+    }
+
+    public void setEngineBoreIn(Float engineBoreIn) {
+        this.engineBoreIn = engineBoreIn;
+    }
+
     public Float getEngineStrokeMm() {
         return engineStrokeMm;
     }
 
     public void setEngineStrokeMm(Float engineStrokeMm) {
         this.engineStrokeMm = engineStrokeMm;
+    }
+
+    public Float getEngineStrokeIn() {
+        return engineStrokeIn;
+    }
+
+    public void setEngineStrokeIn(Float engineStrokeIn) {
+        this.engineStrokeIn = engineStrokeIn;
     }
 
     public String getEngineCompression() {
@@ -342,11 +548,11 @@ public class ModelDetails implements Serializable {
         this.wheelBaseMm = wheelBaseMm;
     }
 
-    public Integer getWheelBaseIn() {
+    public Float getWheelBaseIn() {
         return wheelBaseIn;
     }
 
-    public void setWheelBaseIn(Integer wheelBaseIn) {
+    public void setWheelBaseIn(Float wheelBaseIn) {
         this.wheelBaseIn = wheelBaseIn;
     }
 
@@ -510,11 +716,13 @@ public class ModelDetails implements Serializable {
         result = prime * result + ((cylinders == null) ? 0 : cylinders.hashCode());
         result = prime * result + ((doors == null) ? 0 : doors.hashCode());
         result = prime * result + ((driveType == null) ? 0 : driveType.hashCode());
+        result = prime * result + ((engineBoreIn == null) ? 0 : engineBoreIn.hashCode());
         result = prime * result + ((engineBoreMm == null) ? 0 : engineBoreMm.hashCode());
         result = prime * result + ((engineCompression == null) ? 0 : engineCompression.hashCode());
         result = prime * result + ((engineCubicCentimetres == null) ? 0 : engineCubicCentimetres.hashCode());
         result = prime * result + ((engineCubicInches == null) ? 0 : engineCubicInches.hashCode());
         result = prime * result + ((enginePosition == null) ? 0 : enginePosition.hashCode());
+        result = prime * result + ((engineStrokeIn == null) ? 0 : engineStrokeIn.hashCode());
         result = prime * result + ((engineStrokeMm == null) ? 0 : engineStrokeMm.hashCode());
         result = prime * result + ((engineType == null) ? 0 : engineType.hashCode());
         result = prime * result + ((engineValves == null) ? 0 : engineValves.hashCode());
@@ -538,6 +746,7 @@ public class ModelDetails implements Serializable {
         result = prime * result + ((milesPerGallonHighway == null) ? 0 : milesPerGallonHighway.hashCode());
         result = prime * result + ((milesPerGallonMixed == null) ? 0 : milesPerGallonMixed.hashCode());
         result = prime * result + ((modelID == null) ? 0 : modelID.hashCode());
+        result = prime * result + ((modelTrim == null) ? 0 : modelTrim.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((powerHP == null) ? 0 : powerHP.hashCode());
         result = prime * result + ((powerKW == null) ? 0 : powerKW.hashCode());
@@ -587,6 +796,11 @@ public class ModelDetails implements Serializable {
             return false;
         if (driveType != other.driveType)
             return false;
+        if (engineBoreIn == null) {
+            if (other.engineBoreIn != null)
+                return false;
+        } else if (!engineBoreIn.equals(other.engineBoreIn))
+            return false;
         if (engineBoreMm == null) {
             if (other.engineBoreMm != null)
                 return false;
@@ -608,6 +822,11 @@ public class ModelDetails implements Serializable {
         } else if (!engineCubicInches.equals(other.engineCubicInches))
             return false;
         if (enginePosition != other.enginePosition)
+            return false;
+        if (engineStrokeIn == null) {
+            if (other.engineStrokeIn != null)
+                return false;
+        } else if (!engineStrokeIn.equals(other.engineStrokeIn))
             return false;
         if (engineStrokeMm == null) {
             if (other.engineStrokeMm != null)
@@ -711,6 +930,11 @@ public class ModelDetails implements Serializable {
             if (other.modelID != null)
                 return false;
         } else if (!modelID.equals(other.modelID))
+            return false;
+        if (modelTrim == null) {
+            if (other.modelTrim != null)
+                return false;
+        } else if (!modelTrim.equals(other.modelTrim))
             return false;
         if (name == null) {
             if (other.name != null)
