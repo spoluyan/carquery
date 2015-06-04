@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -27,6 +29,8 @@ import pw.spn.carquery.model.ModelDetails;
 import pw.spn.carquery.model.SearchRequest;
 
 public class CarQueryServiceImpl implements CarQueryService {
+    private static final Log LOG = LogFactory.getLog(CarQueryServiceImpl.class);
+
     private static final String API_URL = "http://www.carqueryapi.com/api/0.3/?callback=?&cmd=";
 
     private static final String COMMAND_GET_YEARS = "getYears";
@@ -97,8 +101,7 @@ public class CarQueryServiceImpl implements CarQueryService {
         try {
             return mapper.readValue(node, ref);
         } catch (IOException e) {
-            // TODO log
-            e.printStackTrace();
+            LOG.error("Unable to parse JSON", e);
         }
         return null;
     }
@@ -114,8 +117,7 @@ public class CarQueryServiceImpl implements CarQueryService {
                 return parseEntity(response.getEntity());
             }
         } catch (IOException e) {
-            // TODO log
-            e.printStackTrace();
+            LOG.error("Unable to make request", e);
         } finally {
             releaseConnection(response, httpclient);
         }
@@ -128,10 +130,11 @@ public class CarQueryServiceImpl implements CarQueryService {
             is = entity.getContent();
             String json = IOUtils.toString(is).trim().substring(2);
             json = json.substring(0, json.length() - 2);
-            System.out.println(json); // TODO log
+            System.out.println(json); // TODO remove
+            LOG.debug(json);
             return parseJSON(json);
         } catch (UnsupportedOperationException | IOException e) {
-            // TODO log
+            LOG.error("Unable to parse response", e);
         } finally {
             IOUtils.closeQuietly(is);
         }
@@ -151,8 +154,7 @@ public class CarQueryServiceImpl implements CarQueryService {
             JsonNode result = object.get(object.getFieldNames().next());
             return result;
         } catch (IOException e) {
-            // TODO log
-            e.printStackTrace();
+            LOG.error("Unable to parse response JSON", e);
         } finally {
             try {
                 parser.close();
