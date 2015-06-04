@@ -19,6 +19,7 @@ public class CarQueryServiceTest {
     private static final Model TEST_MODEL = createTestModel();
     private static final BodyType TEST_BODY_TYPE = BodyType.SUV;
     private static final String TEST_MODEL_ID = "11459";
+    private static final String TEST_INVALID_MODEL_ID = "-1";
     private static final ModelDetails TEST_MODEL_DETAILS = createTestModelDetails();
     private static final SearchRequest TEST_SEARCH_REQUEST = createTestSearchRequest();
 
@@ -145,7 +146,7 @@ public class CarQueryServiceTest {
         ModelDetails noDetails = carQueryService.getModelDetails(null);
         Assert.assertNull(noDetails);
 
-        noDetails = carQueryService.getModelDetails("-1");
+        noDetails = carQueryService.getModelDetails(TEST_INVALID_MODEL_ID);
         Assert.assertNull(noDetails);
 
         ModelDetails details = carQueryService.getModelDetails(TEST_MODEL_ID);
