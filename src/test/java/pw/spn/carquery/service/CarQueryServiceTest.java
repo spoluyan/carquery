@@ -142,6 +142,12 @@ public class CarQueryServiceTest {
 
     @Test
     public void testGetModelDetails() {
+        ModelDetails noDetails = carQueryService.getModelDetails(null);
+        Assert.assertNull(noDetails);
+
+        noDetails = carQueryService.getModelDetails("-1");
+        Assert.assertNull(noDetails);
+
         ModelDetails details = carQueryService.getModelDetails(TEST_MODEL_ID);
         Assert.assertNotNull(details);
         Assert.assertEquals(TEST_MODEL_DETAILS, details);
