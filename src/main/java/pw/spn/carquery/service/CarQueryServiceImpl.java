@@ -21,11 +21,6 @@ import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
-import pw.spn.carquery.model.BodyType;
-import pw.spn.carquery.model.DriveType;
-import pw.spn.carquery.model.EnginePosition;
-import pw.spn.carquery.model.EngineType;
-import pw.spn.carquery.model.FuelType;
 import pw.spn.carquery.model.GetMakesRequest;
 import pw.spn.carquery.model.GetModelsRequest;
 import pw.spn.carquery.model.Make;
@@ -124,7 +119,7 @@ public class CarQueryServiceImpl implements CarQueryService {
         if (request.isSolidInUS()) {
             url.append(PARAM_SOLID_IN_US);
         }
-        if (request.getBodyType() != null && request.getBodyType() != BodyType.UNKNOWN) {
+        if (request.getBodyType() != null) {
             url.append(PARAM_BODY).append(request.getBodyType().getValue());
         }
 
@@ -158,22 +153,22 @@ public class CarQueryServiceImpl implements CarQueryService {
     @Override
     public List<ModelDetails> search(SearchRequest request) {
         StringBuilder url = new StringBuilder(API_URL).append(COMMAND_SEARCH);
-        if (request.getBodyType() != null && request.getBodyType() != BodyType.UNKNOWN) {
+        if (request.getBodyType() != null) {
             url.append(PARAM_BODY).append(request.getBodyType().getValue());
         }
         if (request.getDoors() != null) {
             url.append(PARAM_DOORS).append(request.getDoors());
         }
-        if (request.getDriveType() != null && request.getDriveType() != DriveType.UNKNOWN) {
+        if (request.getDriveType() != null) {
             url.append(PARAM_DRIVE).append(request.getDriveType().getValue());
         }
-        if (request.getEnginePosition() != null && request.getEnginePosition() != EnginePosition.UNKNOWN) {
+        if (request.getEnginePosition() != null) {
             url.append(PARAM_ENGINE_POSITION).append(request.getEnginePosition().getValue());
         }
-        if (request.getEngineType() != null && request.getEngineType() != EngineType.UNKNOWN) {
+        if (request.getEngineType() != null) {
             url.append(PARAM_ENGINE_TYPE).append(request.getEngineType().getValue());
         }
-        if (request.getFuelType() != null && request.getFuelType() != FuelType.UNKNOWN) {
+        if (request.getFuelType() != null) {
             url.append(PARAM_FUEL_TYPE).append(request.getFuelType().getValue());
         }
         if (!request.isFullResults()) {
@@ -305,7 +300,6 @@ public class CarQueryServiceImpl implements CarQueryService {
             is = entity.getContent();
             String json = IOUtils.toString(is).trim().substring(2);
             json = json.substring(0, json.length() - 2);
-            System.out.println(json); // TODO remove
             LOG.debug(json);
             return parseJSON(json);
         } catch (UnsupportedOperationException | IOException e) {

@@ -1,8 +1,8 @@
 package pw.spn.carquery.model;
 
 public enum EngineType {
-    // TODO add more
-    UNKNOWN("Unknown"), V("V"), IN_LINE("in-line");
+    BOXER("boxer"), DUAL_DISK_ROTARY("dual-disc rotary"), ELECTRIC("electric"), FLAT("Flat"), IN_LINE("in-line"), INLINE(
+            "Inline"), NOT_AVAILABLE("Not Available"), SINGLE("single"), V("V"), W("W");
 
     private String value;
 
@@ -20,6 +20,6 @@ public enum EngineType {
                 return type;
             }
         }
-        return UNKNOWN;
+        return NOT_AVAILABLE;
     }
 }

@@ -1,8 +1,8 @@
 package pw.spn.carquery.model;
 
 public enum DriveType {
-    // TODO add more
-    UNKNOWN("Unknown"), FRONT("Front"), REAR("Rear"), AWD("AWD"), FOUR_WD("4WD");
+    FOUR_WD("4WD"), ALL_WHEEL_DRIVE("All Wheel Drive"), AWD("AWD"), FOUR_WHEEL_DRIVE("Four Wheel Drive"), FRONT("Front"), FRONT_WHEEL_DRIVE(
+            "Front Wheel Driv"), NOT_AVAILABLE("Not Available"), REAR("Rear"), REAR_WHEEL_DRIVE("Rear Wheel Drive");
 
     private String value;
 
@@ -20,6 +20,6 @@ public enum DriveType {
                 return type;
             }
         }
-        return UNKNOWN;
+        return NOT_AVAILABLE;
     }
 }

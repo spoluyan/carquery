@@ -1,7 +1,7 @@
 package pw.spn.carquery.model;
 
 public enum EnginePosition {
-    UNKNOWN("Unknown"), FRONT("Front"), MIDDLE("Middle"), REAR("Rear");
+    FRONT("Front"), MIDDLE("Middle"), NOT_AVAILABLE("Not Available"), REAR("Rear");
 
     private String value;
 
@@ -19,6 +19,6 @@ public enum EnginePosition {
                 return type;
             }
         }
-        return UNKNOWN;
+        return NOT_AVAILABLE;
     }
 }
