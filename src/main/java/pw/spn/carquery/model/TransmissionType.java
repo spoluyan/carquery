@@ -1,13 +1,12 @@
 package pw.spn.carquery.model;
 
-public enum BodyType {
+public enum TransmissionType {
     // TODO add more
-    UNKNOWN("Unknown"), COUPE("Coupe"), SEDAN("Sedan"), SUV("SUV"), PICKUP("Pickup"), CROSSOVER("Crossover"), MINIVAN(
-            "Minivan"), ROADSTER("Roadster");
+    UNKNOWN("Unknown"), MANUAL("Manual");
 
     private String value;
 
-    BodyType(String value) {
+    TransmissionType(String value) {
         this.value = value;
     }
 
@@ -15,8 +14,8 @@ public enum BodyType {
         return value;
     }
 
-    public static BodyType fromValue(String value) {
-        for (BodyType type : values()) {
+    public static TransmissionType fromValue(String value) {
+        for (TransmissionType type : values()) {
             if (type.value.equalsIgnoreCase(value)) {
                 return type;
             }
