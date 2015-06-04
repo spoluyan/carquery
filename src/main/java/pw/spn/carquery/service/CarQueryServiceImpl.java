@@ -278,7 +278,7 @@ public class CarQueryServiceImpl implements CarQueryService {
 
     private JsonNode makeRequest(String url) {
         CloseableHttpClient httpclient = HttpClients.createDefault();
-        HttpGet httpget = new HttpGet(url);
+        HttpGet httpget = new HttpGet(url.replace(' ', '+'));
         CloseableHttpResponse response = null;
         try {
             response = httpclient.execute(httpget);
