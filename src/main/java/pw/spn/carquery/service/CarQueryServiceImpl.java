@@ -21,6 +21,7 @@ import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
+import pw.spn.carquery.model.BodyType;
 import pw.spn.carquery.model.GetMakesRequest;
 import pw.spn.carquery.model.GetModelsRequest;
 import pw.spn.carquery.model.Make;
@@ -44,6 +45,8 @@ public class CarQueryServiceImpl implements CarQueryService {
 
     private static final String PARAM_YEAR = "&year=";
     private static final String PARAM_SOLID_IN_US = "&sold_in_us=1";
+    private static final String PARAM_MAKE = "&make=";
+    private static final String PARAM_BODY = "&body=";
 
     @Override
     public List<Integer> getYears() {
@@ -80,8 +83,30 @@ public class CarQueryServiceImpl implements CarQueryService {
 
     @Override
     public List<Model> getModels(GetModelsRequest request) {
-        // TODO Auto-generated method stub
-        return null;
+        if (request.getMake() == null) {
+            LOG.error("Make was not specified");
+            return Collections.emptyList();
+        }
+        StringBuilder url = new StringBuilder(API_URL).append(COMMAND_GET_MODELS).append(PARAM_MAKE)
+                .append(request.getMake().getId());
+        if (request.getYear() != null) {
+            url.append(PARAM_YEAR).append(request.getYear());
+        }
+        if (request.isSolidInUS()) {
+            url.append(PARAM_SOLID_IN_US);
+        }
+        if (request.getBodyType() != null && request.getBodyType() != BodyType.UNKNOWN) {
+            url.append(PARAM_BODY).append(request.getBodyType().getValue());
+        }
+
+        JsonNode json = makeRequest(url.toString());
+
+        if (json == null) {
+            return Collections.emptyList();
+        }
+
+        return parseJSON(json, new TypeReference<List<Model>>() {
+        });
     }
 
     @Override
