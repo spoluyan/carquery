@@ -22,9 +22,14 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
 import pw.spn.carquery.model.BodyType;
+import pw.spn.carquery.model.DriveType;
+import pw.spn.carquery.model.EnginePosition;
+import pw.spn.carquery.model.EngineType;
+import pw.spn.carquery.model.FuelType;
 import pw.spn.carquery.model.GetMakesRequest;
 import pw.spn.carquery.model.GetModelsRequest;
 import pw.spn.carquery.model.Make;
+import pw.spn.carquery.model.MinMaxInterval;
 import pw.spn.carquery.model.Model;
 import pw.spn.carquery.model.ModelDetails;
 import pw.spn.carquery.model.SearchRequest;
@@ -49,6 +54,28 @@ public class CarQueryServiceImpl implements CarQueryService {
     private static final String PARAM_MAKE = "&make=";
     private static final String PARAM_BODY = "&body=";
     private static final String PARAM_MODEL = "&model=";
+    private static final String PARAM_DOORS = "&doors=";
+    private static final String PARAM_DRIVE = "&drive=";
+    private static final String PARAM_ENGINE_POSITION = "&engine_position=";
+    private static final String PARAM_ENGINE_TYPE = "&engine_type=";
+    private static final String PARAM_FUEL_TYPE = "&fuel_type=";
+    private static final String PARAM_FULL_RESULTS_FALSE = "&full_results=0";
+    private static final String PARAM_KEYWORD = "&keyword=";
+    private static final String PARAM_MIN_CYLINDERS = "&min_cylinders=";
+    private static final String PARAM_MAX_CYLINDERS = "&max_cylinders=";
+    private static final String PARAM_MIN_LKM = "&min_lkm_hwy=";
+    private static final String PARAM_MAX_LKM = "&max_lkm_hwy=";
+    private static final String PARAM_MIN_POWER = "&min_power=";
+    private static final String PARAM_MAX_POWER = "&max_power=";
+    private static final String PARAM_MIN_TOP_SPEED = "&min_top_speed=";
+    private static final String PARAM_MAX_TOP_SPEED = "&max_top_speed=";
+    private static final String PARAM_MIN_TORQUE = "&min_torque=";
+    private static final String PARAM_MAX_TORQUE = "&max_torque=";
+    private static final String PARAM_MIN_WEIGHT = "&min_weight=";
+    private static final String PARAM_MAX_WEIGHT = "&max_weight=";
+    private static final String PARAM_MIN_YEAR = "&min_year=";
+    private static final String PARAM_MAX_YEAR = "&max_year=";
+    private static final String PARAM_SEATS = "&seats=";
 
     @Override
     public List<Integer> getYears() {
@@ -129,9 +156,119 @@ public class CarQueryServiceImpl implements CarQueryService {
     }
 
     @Override
-    public List<ModelDetails> search(SearchRequest query) {
-        // TODO Auto-generated method stub
-        return null;
+    public List<ModelDetails> search(SearchRequest request) {
+        StringBuilder url = new StringBuilder(API_URL).append(COMMAND_SEARCH);
+        if (request.getBodyType() != null && request.getBodyType() != BodyType.UNKNOWN) {
+            url.append(PARAM_BODY).append(request.getBodyType().getValue());
+        }
+        if (request.getDoors() != null) {
+            url.append(PARAM_DOORS).append(request.getDoors());
+        }
+        if (request.getDriveType() != null && request.getDriveType() != DriveType.UNKNOWN) {
+            url.append(PARAM_DRIVE).append(request.getDriveType().getValue());
+        }
+        if (request.getEnginePosition() != null && request.getEnginePosition() != EnginePosition.UNKNOWN) {
+            url.append(PARAM_ENGINE_POSITION).append(request.getEnginePosition().getValue());
+        }
+        if (request.getEngineType() != null && request.getEngineType() != EngineType.UNKNOWN) {
+            url.append(PARAM_ENGINE_TYPE).append(request.getEngineType().getValue());
+        }
+        if (request.getFuelType() != null && request.getFuelType() != FuelType.UNKNOWN) {
+            url.append(PARAM_FUEL_TYPE).append(request.getFuelType().getValue());
+        }
+        if (!request.isFullResults()) {
+            url.append(PARAM_FULL_RESULTS_FALSE);
+        }
+        if (request.getKeyword() != null) {
+            url.append(PARAM_KEYWORD).append(request.getKeyword());
+        }
+        if (request.getMakeID() != null) {
+            url.append(PARAM_MAKE).append(request.getMakeID());
+        }
+        if (request.getCylinders() != null) {
+            MinMaxInterval cylinders = request.getCylinders();
+            if (cylinders.getMin() != null) {
+                url.append(PARAM_MIN_CYLINDERS).append(cylinders.getMin());
+            }
+            if (cylinders.getMax() != null) {
+                url.append(PARAM_MAX_CYLINDERS).append(cylinders.getMax());
+            }
+        }
+        if (request.getLitersPer100km() != null) {
+            MinMaxInterval lkm = request.getLitersPer100km();
+            if (lkm.getMin() != null) {
+                url.append(PARAM_MIN_LKM).append(lkm.getMin());
+            }
+            if (lkm.getMax() != null) {
+                url.append(PARAM_MAX_LKM).append(lkm.getMax());
+            }
+        }
+        if (request.getPowerPS() != null) {
+            MinMaxInterval power = request.getPowerPS();
+            if (power.getMin() != null) {
+                url.append(PARAM_MIN_POWER).append(power.getMin());
+            }
+            if (power.getMax() != null) {
+                url.append(PARAM_MAX_POWER).append(power.getMax());
+            }
+        }
+        if (request.getTopSpeedKmPerH() != null) {
+            MinMaxInterval topSpeed = request.getTopSpeedKmPerH();
+            if (topSpeed.getMin() != null) {
+                url.append(PARAM_MIN_TOP_SPEED).append(topSpeed.getMin());
+            }
+            if (topSpeed.getMax() != null) {
+                url.append(PARAM_MAX_TOP_SPEED).append(topSpeed.getMax());
+            }
+        }
+        if (request.getTorqueNm() != null) {
+            MinMaxInterval torque = request.getTorqueNm();
+            if (torque.getMin() != null) {
+                url.append(PARAM_MIN_TORQUE).append(torque.getMin());
+            }
+            if (torque.getMax() != null) {
+                url.append(PARAM_MAX_TORQUE).append(torque.getMax());
+            }
+        }
+        if (request.getWeightKg() != null) {
+            MinMaxInterval weight = request.getWeightKg();
+            if (weight.getMin() != null) {
+                url.append(PARAM_MIN_WEIGHT).append(weight.getMin());
+            }
+            if (weight.getMax() != null) {
+                url.append(PARAM_MAX_WEIGHT).append(weight.getMax());
+            }
+        }
+        if (request.getYearInterval() != null) {
+            MinMaxInterval year = request.getYearInterval();
+            if (year.getMin() != null) {
+                url.append(PARAM_MIN_YEAR).append(year.getMin());
+            }
+            if (year.getMax() != null) {
+                url.append(PARAM_MAX_YEAR).append(year.getMax());
+            }
+        }
+        if (request.getModelName() != null) {
+            url.append(PARAM_MODEL).append(request.getModelName());
+        }
+        if (request.getNumberOfSeats() != null) {
+            url.append(PARAM_SEATS).append(request.getNumberOfSeats());
+        }
+        if (request.isSolidInUS()) {
+            url.append(PARAM_SOLID_IN_US);
+        }
+        if (request.getYear() != null) {
+            url.append(PARAM_YEAR).append(request.getYear());
+        }
+
+        JsonNode json = makeRequest(url.toString());
+
+        if (json == null) {
+            return null;
+        }
+
+        return parseJSON(json, new TypeReference<List<ModelDetails>>() {
+        });
     }
 
     private <T> T parseJSON(JsonNode node, TypeReference<T> ref) {

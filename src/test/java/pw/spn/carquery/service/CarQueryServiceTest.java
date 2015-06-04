@@ -6,17 +6,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import pw.spn.carquery.model.BodyType;
-import pw.spn.carquery.model.DriveType;
-import pw.spn.carquery.model.EnginePosition;
-import pw.spn.carquery.model.EngineType;
-import pw.spn.carquery.model.FuelType;
 import pw.spn.carquery.model.GetMakesRequest;
 import pw.spn.carquery.model.GetModelsRequest;
 import pw.spn.carquery.model.Make;
 import pw.spn.carquery.model.Model;
 import pw.spn.carquery.model.ModelDetails;
 import pw.spn.carquery.model.SearchRequest;
-import pw.spn.carquery.model.TransmissionType;
 
 public class CarQueryServiceTest {
     private static final int TEST_YEAR = 2000;
@@ -37,70 +32,16 @@ public class CarQueryServiceTest {
     }
 
     private static SearchRequest createTestSearchRequest() {
-        return SearchRequest.newBuilder().setModelName(TEST_MODEL.getName()).setYear(TEST_YEAR)
-                .setMakeID(TEST_MAKE.getId()).build();
+        return SearchRequest.newBuilder().setModelName(TEST_MODEL_DETAILS.getName())
+                .setYear(TEST_MODEL_DETAILS.getYear()).setMakeID(TEST_MODEL_DETAILS.getMakeID()).build();
     }
 
     private static ModelDetails createTestModelDetails() {
         ModelDetails details = new ModelDetails();
         details.setModelID(TEST_MODEL_ID);
-        details.setMakeID("dodge");
         details.setName("Viper");
-        details.setModelTrim("SRT-10");
         details.setYear(2009);
-        details.setBodyType(BodyType.ROADSTER);
-        details.setEnginePosition(EnginePosition.FRONT);
-        details.setEngineCubicCentimetres(8285);
-        details.setCylinders(10);
-        details.setEngineType(EngineType.V);
-        details.setValvesPerCylinder(2);
-        details.setPowerPS(506);
-        details.setPowerRPM(5600);
-        details.setTorqueNm(711);
-        details.setTorqueRPM(4200);
-        details.setEngineBoreMm(102.4f);
-        details.setEngineBoreIn(4.03f);
-        details.setEngineStrokeMm(100.6f);
-        details.setEngineStrokeIn(3.96f);
-        details.setEngineCompression("10.0:1");
-        details.setFuleType(FuelType.GASOLINE);
-        details.setTopSpeedKmPH(314);
-        details.setZeroTo100InSeconds(3.9f);
-        details.setDriveType(DriveType.REAR);
-        details.setTransmissionType(TransmissionType.MANUAL);
-        details.setSeats(2);
-        details.setDoors(2);
-        details.setWeightKg(1602);
-        details.setLengthMm(4470);
-        details.setWidthMm(1950);
-        details.setHeightMm(1220);
-        details.setWheelBaseMm(2520);
-        details.setLitersPer100kmHighway(10.7f);
-        details.setLitersPer100kmMixed(21.2f);
-        details.setLitersPer100kmCity(18.1f);
-        details.setFuelCapasityLiters(70);
-        details.setSolidInUS(true);
-        details.setEngineVolumeLiters(8.3f);
-        details.setEngineCubicInches(506);
-        details.setEngineValves(20);
-        details.setPowerHP(499);
-        details.setPowerKW(372);
-        details.setTorqueLbFeet(524);
-        details.setTorqueKgM(73);
-        details.setTopSpeedMPH(195);
-        details.setWeightLbs(3532);
-        details.setLengthIn(176.0f);
-        details.setWidthIn(76.8f);
-        details.setHeightIn(48.0f);
-        details.setWheelBaseIn(99.2f);
-        details.setMilesPerGallonHighway(22);
-        details.setMilesPerGallonCity(13);
-        details.setMilesPerGallonMixed(11);
-        details.setFuelCapasityGallons(18.5f);
-        details.setMakeName("Dodge");
-        details.setMakeCountry("USA");
-        details.setExterierColors(new String[] {});
-        details.setInterierColors(new String[] {});
+        details.setMakeID("dodge");
         return details;
     }
 
@@ -218,13 +159,7 @@ public class CarQueryServiceTest {
 
     @Test
     public void testSearch() {
-        List<ModelDetails> noResults = carQueryService.search(SearchRequest.newBuilder().build());
-
         List<ModelDetails> results = carQueryService.search(TEST_SEARCH_REQUEST);
-
-        Assert.assertNotNull(noResults);
-        Assert.assertEquals(0, noResults.size());
-
         Assert.assertNotNull(results);
         Assert.assertTrue(results.size() > 0);
         Assert.assertTrue(results.contains(TEST_MODEL_DETAILS));
